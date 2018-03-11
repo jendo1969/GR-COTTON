@@ -48,7 +48,7 @@ void sendSignal(int mode) {
       digitalWrite(LED, (cnt%2) ? HIGH : LOW);
       delayMicroseconds(8);
       digitalWrite(LED, HIGH);
-      delayMicroseconds(7);
+      delayMicroseconds(17);
     } while (long(us + len - micros()) > 0);
   }
 }

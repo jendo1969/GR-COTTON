@@ -12,8 +12,11 @@ int sensorValue = 0;  // variable to store the value coming from the sensor
 int be_cnt = 0;
 int no_cnt = 0;
 
-const int off_cnt = 100;
+const int off_cnt = 30;
 const int on_cnt = 10;
+
+const int distancePin = A2;
+int distanceValue = 0;
 
 // 赤外線リモコンのOFF・ONデータ
 int data[2][39] = {
@@ -49,6 +52,7 @@ void loop()
 {
   // read the value from the sensor:
   sensorValue = analogRead(sensorPin);  
+  distanceValue = analogRead(distancePin);  
 
   PIR_STATE = digitalRead(PIR);
   if(PIR_STATE == LOW)
@@ -67,7 +71,10 @@ void loop()
     Serial.print(no_cnt);
     Serial.print(" : ");
   }
-  Serial.println(sensorValue); 
+//  Serial.println(sensorValue); 
+  Serial.print(sensorValue); 
+  Serial.print(" : ");
+  Serial.println(distanceValue); 
 
   if(be_cnt >= on_cnt)
   {
@@ -79,7 +86,12 @@ void loop()
       Serial.println("ON ");
     }
   }
-  
+
+  if(distanceValue > 150)
+  {
+    no_cnt = 0;
+  }
+ 
   if(no_cnt >= off_cnt)
   {
     no_cnt = 0;
